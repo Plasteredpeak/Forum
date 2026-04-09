@@ -9,8 +9,8 @@ A forum website built as a WEB semester project using **Laravel (PHP)** with **B
 - **Database:** MySQL / MariaDB
 - **Frontend tooling:** TailwindCSS + Laravel Mix (Webpack)
 - Other notable packages:
-  - `cyrildewit/eloquent-viewable` (view counts)
-  - `mews/purifier` (HTML sanitization)
+    - `cyrildewit/eloquent-viewable` (view counts)
+    - `mews/purifier` (HTML sanitization)
 
 ## Features (high level)
 
@@ -36,75 +36,74 @@ A forum website built as a WEB semester project using **Laravel (PHP)** with **B
 These are the exact steps that were used to run the project successfully on this machine.
 
 1. Make sure these prerequisites are installed:
-   - PHP 8.1 with `pdo_mysql` and `mysqli` enabled
-   - Composer
-   - Node.js + npm
-   - MySQL or MariaDB
+    - PHP 8.1 with `pdo_mysql` and `mysqli` enabled
+    - Composer
+    - Node.js + npm
+    - MySQL or MariaDB
 
 2. Install PHP dependencies without dev scripts:
 
-   ```bash
-   composer install --no-dev --no-scripts
-   ```
+    ```bash
+    composer install --no-dev --no-scripts
+    ```
 
 3. Install frontend dependencies:
 
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
 4. Create your environment file if it does not already exist:
 
-   ```bash
-   cp .env.example .env
-   ```
+    ```bash
+    cp .env.example .env
+    ```
 
 5. Configure the database in `.env`:
-
-   - `DB_CONNECTION=mysql`
-   - `DB_HOST=127.0.0.1`
-   - `DB_PORT=3306`
-   - `DB_DATABASE=forum`
-   - `DB_USERNAME=root`
-   - `DB_PASSWORD=root`
+    - `DB_CONNECTION=mysql`
+    - `DB_HOST=127.0.0.1`
+    - `DB_PORT=3306`
+    - `DB_DATABASE=forum`
+    - `DB_USERNAME=root`
+    - `DB_PASSWORD=root`
 
 6. Start MySQL.
-   - If you want the Docker setup from this repo, run `docker compose up -d mysql`.
-   - Otherwise point `.env` at your local MySQL/MariaDB instance.
+    - If you want the Docker setup from this repo, run `docker compose up -d mysql`.
+    - Otherwise point `.env` at your local MySQL/MariaDB instance.
 
 7. Create the application key:
 
-   ```bash
-   php artisan key:generate
-   ```
+    ```bash
+    php artisan key:generate
+    ```
 
 8. Create the database if needed and run migrations:
 
-   ```bash
-   php artisan migrate --force
-   ```
+    ```bash
+    php artisan migrate --force
+    ```
 
 9. Seed the demo data:
 
-   ```bash
-   php artisan db:seed
-   ```
+    ```bash
+    php artisan db:seed
+    ```
 
 10. Build the frontend assets.
 
     On modern Node versions, use the OpenSSL compatibility flag:
 
-   ```bash
-   $env:NODE_OPTIONS='--openssl-legacy-provider'; npm run dev
-   ```
+```bash
+$env:NODE_OPTIONS='--openssl-legacy-provider'; npm run dev
+```
 
 11. Start the app:
 
-   ```bash
-   php artisan serve --host=127.0.0.1 --port=8000
-   ```
+```bash
+php artisan serve --host=127.0.0.1 --port=8000
+```
 
-   Open: `http://127.0.0.1:8000`
+Open: `http://127.0.0.1:8000`
 
 ### Alternative install path
 
@@ -138,39 +137,43 @@ Laravel apps can be deployed in multiple ways. Below are common production steps
 ### Production checklist
 
 1. **Set production environment values**
-   - `APP_ENV=production`
-   - `APP_DEBUG=false`
-   - `APP_URL=https://your-domain.com`
+    - `APP_ENV=production`
+    - `APP_DEBUG=false`
+    - `APP_URL=https://your-domain.com`
 
 2. **Set `APP_KEY`**
-   - Generate locally: `php artisan key:generate --show`
-   - Or generate on the server: `php artisan key:generate`
+    - Generate locally: `php artisan key:generate --show`
+    - Or generate on the server: `php artisan key:generate`
 
 3. **Database**
-   - Provision a MySQL/MariaDB instance (or managed DB)
-   - Set `DB_*` variables appropriately
+    - Provision a MySQL/MariaDB instance (or managed DB)
+    - Set `DB_*` variables appropriately
 
 4. **Run migrations**
-   ```bash
-   php artisan migrate --force
-   ```
+
+    ```bash
+    php artisan migrate --force
+    ```
 
 5. **Cache configuration/routes/views**
-   ```bash
-   php artisan config:cache
-   php artisan route:cache
-   php artisan view:cache
-   ```
+
+    ```bash
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:cache
+    ```
 
 6. **Storage + uploads**
-   ```bash
-   php artisan storage:link
-   ```
-   Ensure `storage/` and `bootstrap/cache/` are writable by the web server user.
+
+    ```bash
+    php artisan storage:link
+    ```
+
+    Ensure `storage/` and `bootstrap/cache/` are writable by the web server user.
 
 7. **Queue / scheduler (optional, if used)**
-   - If you switch to real queues: set `QUEUE_CONNECTION=database|redis` and run a queue worker.
-   - Scheduler: configure a cron job calling `php artisan schedule:run`.
+    - If you switch to real queues: set `QUEUE_CONNECTION=database|redis` and run a queue worker.
+    - Scheduler: configure a cron job calling `php artisan schedule:run`.
 
 ### Web server notes
 
