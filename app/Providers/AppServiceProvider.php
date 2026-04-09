@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\User;
 use App\Models\Reply;
 use App\Models\Thread;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -27,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (app()->environment('production') || env('VERCEL')) {
+            URL::forceScheme('https');
+        }
+
         $this->bootEloquentMorphsRelations();
     }
     public function bootEloquentMorphsRelations()
