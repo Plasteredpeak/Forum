@@ -4,6 +4,8 @@ use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 
+$runningOnVercel = filter_var(env('VERCEL', false), FILTER_VALIDATE_BOOLEAN) || !empty(env('VERCEL_ENV'));
+
 return [
 
     /*
@@ -17,7 +19,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', env('APP_ENV') === 'production' ? 'stderr' : 'stack'),
+    'default' => env('LOG_CHANNEL', $runningOnVercel || env('APP_ENV') === 'production' ? 'stderr' : 'stack'),
 
     /*
     |--------------------------------------------------------------------------
@@ -37,19 +39,19 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => env('APP_ENV') === 'production' ? ['stderr'] : ['single'],
+            'channels' => $runningOnVercel || env('APP_ENV') === 'production' ? ['stderr'] : ['single'],
             'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => $runningOnVercel ? '/tmp/laravel.log' : storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => $runningOnVercel ? '/tmp/laravel.log' : storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 14,
         ],
