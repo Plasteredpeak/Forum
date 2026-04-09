@@ -31,66 +31,105 @@ A forum website built as a WEB semester project using **Laravel (PHP)** with **B
 
 ## Local development setup
 
-### 1) Install PHP dependencies
+### Verified local setup
+
+These are the exact steps that were used to run the project successfully on this machine.
+
+1. Make sure these prerequisites are installed:
+   - PHP 8.1 with `pdo_mysql` and `mysqli` enabled
+   - Composer
+   - Node.js + npm
+   - MySQL or MariaDB
+
+2. Install PHP dependencies without dev scripts:
+
+   ```bash
+   composer install --no-dev --no-scripts
+   ```
+
+3. Install frontend dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Create your environment file if it does not already exist:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+5. Configure the database in `.env`:
+
+   - `DB_CONNECTION=mysql`
+   - `DB_HOST=127.0.0.1`
+   - `DB_PORT=3306`
+   - `DB_DATABASE=forum`
+   - `DB_USERNAME=root`
+   - `DB_PASSWORD=root`
+
+6. Start MySQL.
+   - If you want the Docker setup from this repo, run `docker compose up -d mysql`.
+   - Otherwise point `.env` at your local MySQL/MariaDB instance.
+
+7. Create the application key:
+
+   ```bash
+   php artisan key:generate
+   ```
+
+8. Create the database if needed and run migrations:
+
+   ```bash
+   php artisan migrate --force
+   ```
+
+9. Seed the demo data:
+
+   ```bash
+   php artisan db:seed
+   ```
+
+10. Build the frontend assets.
+
+    On modern Node versions, use the OpenSSL compatibility flag:
+
+   ```bash
+   $env:NODE_OPTIONS='--openssl-legacy-provider'; npm run dev
+   ```
+
+11. Start the app:
+
+   ```bash
+   php artisan serve --host=127.0.0.1 --port=8000
+   ```
+
+   Open: `http://127.0.0.1:8000`
+
+### Alternative install path
+
+If you are on PHP 8.0 and want the standard Laravel install flow, you can try:
 
 ```bash
 composer install
-```
-
-### 2) Create your environment file
-
-```bash
-cp .env.example .env
 php artisan key:generate
+php artisan migrate --force
+php artisan db:seed
 ```
 
-### 3) Configure the database
+If Composer fails on your PHP version, fall back to the verified setup above.
 
-Update `.env`:
+### SQL dump option
 
-- `DB_CONNECTION=mysql`
-- `DB_HOST=127.0.0.1`
-- `DB_PORT=3306`
-- `DB_DATABASE=forum`
-- `DB_USERNAME=...`
-- `DB_PASSWORD=...`
+This repo also includes `forum.sql` (phpMyAdmin export; generated **2022-01-18**, MariaDB **10.4.22**).
 
-### 4) Initialize the database (choose one)
-
-#### Option A — Run migrations + seed (recommended)
-```bash
-php artisan migrate
-# if seeders exist and you want demo data:
-# php artisan db:seed
-```
-
-#### Option B — Import the provided SQL dump (quick demo data)
-This repo includes `forum.sql` (phpMyAdmin export; generated **2022-01-18**, MariaDB **10.4.22**).
-
-Create an empty `forum` database, then import:
+If you prefer to import the dump instead of migrating, create an empty `forum` database and run:
 
 ```bash
 mysql -u root -p forum < forum.sql
 ```
 
-> If you import `forum.sql`, you typically **do not** need to run migrations (the tables/data are already created).
-
-### 5) Install frontend dependencies + build assets
-
-```bash
-npm install
-npm run dev
-# or production build:
-# npm run prod
-```
-
-### 6) Run the app
-
-```bash
-php artisan serve
-```
-
-Open: `http://127.0.0.1:8000`
+If you import `forum.sql`, you typically do **not** need to run migrations or seeders.
 
 ## Deployment
 
