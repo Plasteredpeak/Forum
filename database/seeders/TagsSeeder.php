@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class TagsSeeder extends Seeder
 {
@@ -15,32 +16,32 @@ class TagsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tags')->insert([
-            [
-                'name' => 'Gossip',
-                'slug' => 'gossip',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
+        $tags = [
+            // Anime
+            'Naruto', 'One Piece', 'Attack on Titan', 'Demon Slayer', 'Jujutsu Kaisen', 'Chainsaw Man',
+            // Gaming
+            'Valorant', 'CS2', 'Minecraft', 'Elden Ring', 'Genshin Impact', 'League of Legends', 'Dota 2',
+            // Coding
+            'PHP', 'Laravel', 'JavaScript', 'Python', 'React', 'Debugging', 'Algorithms', 'DevOps',
+            // Movies
+            'Marvel', 'DC', 'Sci-Fi', 'Horror', 'Action', 'Comedy', 'Christopher Nolan',
+            // Series
+            'Netflix', 'HBO', 'Crime', 'Fantasy', 'Sitcom', 'K-Drama',
+            // Global
+            'Question', 'Guide', 'Review', 'Recommendation', 'News',
+        ];
 
-            [
-                'name' => 'Valorant',
-                'slug' => 'valorant',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'Java',
-                'slug' => 'java',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name' => 'MHA',
-                'slug' => 'mha',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-        ]);
+        $now = Carbon::now();
+
+        foreach ($tags as $tag) {
+            DB::table('tags')->updateOrInsert(
+                ['name' => $tag],
+                [
+                    'slug' => Str::slug($tag),
+                    'updated_at' => $now,
+                    'created_at' => $now,
+                ]
+            );
+        }
     }
 }

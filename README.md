@@ -89,6 +89,17 @@ These are the exact steps that were used to run the project successfully on this
     php artisan db:seed
     ```
 
+### Seeded Demo Accounts
+
+After seeding, you can log in with these accounts:
+
+- Guest test account:
+    - Email: `guest@forum.test`
+    - Password: `guest123`
+- Admin account:
+    - Email: `admin@pp.com`
+    - Password: `pp`
+
 10. Build the frontend assets.
 
     On modern Node versions, use the OpenSSL compatibility flag:
