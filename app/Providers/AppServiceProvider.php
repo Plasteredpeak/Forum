@@ -28,8 +28,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (app()->environment('production') || env('VERCEL')) {
+        $forwardedProto = request()->headers->get('x-forwarded-proto');
+        $shouldForceHttps = app()->environment('production') || env('VERCEL') || $forwardedProto === 'https';
+
+        if ($shouldForceHttps) {
             URL::forceScheme('https');
+
+            $host = request()->getHost();
+
+            if (!empty($host)) {
+                URL::forceRootUrl('https://' . $host);
+            }
         }
 
         $this->bootEloquentMorphsRelations();
