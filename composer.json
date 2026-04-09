@@ -23,6 +23,7 @@
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.0",
         "mews/purifier": "^3.3",
+        "nesbot/carbon": "^2.72",
         "fakerphp/faker": "^1.9.1"
     },
     "require-dev": {
