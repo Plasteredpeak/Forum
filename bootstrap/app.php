@@ -27,6 +27,7 @@ if ($runningOnVercel) {
         'APP_CONFIG_CACHE' => $runtimeStoragePath . '/bootstrap/cache/config.php',
         'APP_ROUTES_CACHE' => $runtimeStoragePath . '/bootstrap/cache/routes.php',
         'APP_EVENTS_CACHE' => $runtimeStoragePath . '/bootstrap/cache/events.php',
+        'LIVEWIRE_MANIFEST_PATH' => $runtimeStoragePath . '/bootstrap/cache/livewire-components.php',
         'VIEW_COMPILED_PATH' => $runtimeStoragePath . '/framework/views',
     ];
 
